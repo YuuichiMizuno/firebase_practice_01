@@ -10,6 +10,8 @@
  *        忘れてて、急にあたふたするあるある
  *       順番が守られていないようである。
  *       こちらでソートが必要になる
+ *
+ *       変わったインデントをしていますが、これは私が見やすくて好きだからです
  */
 
 import UIKit
@@ -27,49 +29,15 @@ class ViewController: JSQMessagesViewController
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        //senderDisplayName   = "A"
-        //senderId            = "Dummy"
-        loadMessages()
+        loadMessages() // // //
     }
-
-    
     
     
     // MARK: - JSQMessagesViewController  override
     override func didPressSend(_ button: UIButton!, withMessageText text: String!, senderId: String!, senderDisplayName: String!, date: Date!) {
         inputToolbar.contentView.textView.text = ""
-        let ref = FIRDatabase.database().reference()
-        ref.child("messages").childByAutoId().setValue(
-            ["senderId": senderId, "text": text, "displayName": senderDisplayName])
+        sendMessage(messageText: text, senderId: senderId, senderDisplayName: senderDisplayName, date: date) // // //
     }
-    
-    // MARK:  JSQMessagesViewController  private
-    fileprivate func loadMessages() {
-        senderDisplayName   = "A"
-        senderId            = "Dummy"
-        
-//        senderDisplayName   = "B"
-//        senderId            = "Dummy2"
-        
-        let ref = FIRDatabase.database().reference()
-            ref.observe(.value, with: { snapshot in
-                guard let dic = snapshot.value as? Dictionary<String, AnyObject> else {
-                    return
-                }
-                guard let posts = dic["messages"] as? Dictionary<String, Dictionary<String, String>> else {
-                    return
-                }
-                self.messages = posts.values.map { dic in
-                    let senderId = dic["senderId"] ?? ""
-                    let text = dic["text"] ?? ""
-                    let displayName = dic["displayName"] ?? ""
-                    return JSQMessage(senderId: senderId,  displayName: displayName, text: text)
-                }
-                self.collectionView.reloadData()
-            })
-    }
-    
-    
     
     // MARK: - collectionView delegate
     override func collectionView(_ collectionView: JSQMessagesCollectionView!, messageDataForItemAt indexPath: IndexPath!) -> JSQMessageData! {
@@ -108,6 +76,57 @@ class ViewController: JSQMessagesViewController
             backgroundColor: UIColor.lightGray, textColor: UIColor.white,
             font: UIFont.systemFont(ofSize: 10), diameter: 30)
     }
+    
+    
+    
+    
+    
+    // MARK: - private
+
+    // MARK: - firebase database
+    fileprivate func sendMessage(messageText text: String!, senderId: String!, senderDisplayName: String!, date: Date!)
+    {
+        let ref = FIRDatabase.database().reference()
+            ref.child("messages").childByAutoId().setValue(["senderId": senderId, "text": text, "displayName": senderDisplayName])
+            // 指定したパスの(child)新しい子供オブジェクトを(childByAutoId)データベースに書き込みます(setValue)
+    }
+    
+    fileprivate func loadMessages()
+    {
+        senderDisplayName   = "A"
+        senderId            = "Dummy"
+        //        senderDisplayName   = "B"
+        //        senderId            = "Dummy2"
+        let ref = FIRDatabase.database().reference()
+            ref.observe(.value, with: { snapshot in
+                guard let dic = snapshot.value as? Dictionary<String, AnyObject> else {
+                    return
+                }
+                guard let posts = dic["messages"] as? Dictionary<String, Dictionary<String, String>> else {
+                    return
+                }
+                self.messages   = posts.values.map { dic in
+                    let senderId    = dic["senderId"] ?? ""
+                    let text        = dic["text"] ?? ""
+                    let displayName = dic["displayName"] ?? ""
+                    return JSQMessage(senderId: senderId,  displayName: displayName, text: text)
+                }
+                self.collectionView.reloadData()
+            })
+            // データ変更をリスンします(データを読み取る主な方法)
+            // ブロックスで結果を取得、ビューを再描画しています
+            // `JSQMessage`クラスは、単一のユーザメッセージを表すメッセージモデルオブジェクトの具体的なクラスです
+    }
+    
+
+    // MARK: - firebase analytics
+    fileprivate func analyticsEvent() {
+        
+    }
+    
+    
+    
+    
 }
 
 

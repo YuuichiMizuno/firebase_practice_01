@@ -223,7 +223,7 @@
 				TargetAttributes = {
 					4B5319EC1DDAD45900E00D2F = {
 						CreatedOnToolsVersion = 8.1;
-						DevelopmentTeam = 9GS9K83RG8;
+						DevelopmentTeam = 4PF2E3SG23;
 						LastSwiftMigration = 0810;
 						ProvisioningStyle = Automatic;
 					};
@@ -498,7 +498,7 @@
 			baseConfigurationReference = 09E8D5D4F567735E064517C0 /* Pods-firebase_practice_01.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				DEVELOPMENT_TEAM = 9GS9K83RG8;
+				DEVELOPMENT_TEAM = 4PF2E3SG23;
 				INFOPLIST_FILE = firebase_practice_01/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "atoms.firebase-practice-01";
@@ -512,7 +512,7 @@
 			baseConfigurationReference = 43468DF0FD353756282CF5AB /* Pods-firebase_practice_01.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				DEVELOPMENT_TEAM = 9GS9K83RG8;
+				DEVELOPMENT_TEAM = 4PF2E3SG23;
 				INFOPLIST_FILE = firebase_practice_01/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "atoms.firebase-practice-01";
