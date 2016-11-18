@@ -17,7 +17,8 @@
 import UIKit
 import JSQMessagesViewController
 import Firebase
-import FirebaseDatabase
+import FirebaseDatabase  // すでに含まれていますがあえて
+import FirebaseAnalytics // すでに含まれていますがあえて
 
 class ViewController: JSQMessagesViewController
 {
@@ -89,14 +90,18 @@ class ViewController: JSQMessagesViewController
         let ref = FIRDatabase.database().reference()
             ref.child("messages").childByAutoId().setValue(["senderId": senderId, "text": text, "displayName": senderDisplayName])
             // 指定したパスの(child)新しい子供オブジェクトを(childByAutoId)データベースに書き込みます(setValue)
+        
+        
+        // test
+        analyticsEventAll()
     }
     
     fileprivate func loadMessages()
     {
-        senderDisplayName   = "A"
-        senderId            = "Dummy"
-        //        senderDisplayName   = "B"
-        //        senderId            = "Dummy2"
+//        senderDisplayName   = "A"
+//        senderId            = "Dummy"
+                senderDisplayName   = "B"
+                senderId            = "Dummy2"
         let ref = FIRDatabase.database().reference()
             ref.observe(.value, with: { snapshot in
                 guard let dic = snapshot.value as? Dictionary<String, AnyObject> else {
@@ -121,6 +126,51 @@ class ViewController: JSQMessagesViewController
 
     // MARK: - firebase analytics
     fileprivate func analyticsEvent() {
+        
+    }
+    
+    fileprivate func analyticsEventAll() {
+        
+        FIRAnalytics.setScreenName("view_first_root", screenClass: "NormalUIViewController")
+        
+        FIRAnalytics.setUserPropertyString("111", forName: "dailyLoginBonusCount")
+        FIRAnalytics.setUserPropertyString("true", forName: "firstGenarationUser")
+        
+        FIRAnalytics.logEvent(withName: "kFIREventAddPaymentInfo", parameters: nil)
+        FIRAnalytics.logEvent(withName: "kFIREventAddToCart", parameters: [
+            kFIRParameterQuantity:NSNumber(value:1),
+            kFIRParameterItemID:"123" as NSObject,
+            kFIRParameterItemName:"nameabc" as NSObject
+            ])
+        FIRAnalytics.logEvent(withName: "kFIREventAddToWishlist", parameters: [
+            kFIRParameterQuantity:NSNumber(value:123),
+            kFIRParameterPrice:NSNumber(value:123)
+            ])
+//        FIRAnalytics.logEvent(withName: "kFIREventAppOpen", parameters: <#T##[String : NSObject]?#>)
+//        FIRAnalytics.logEvent(withName: "kFIREventBeginCheckout", parameters: <#T##[String : NSObject]?#>)
+//        FIRAnalytics.logEvent(withName: "kFIREventEarnVirtualCurrency", parameters: <#T##[String : NSObject]?#>)
+//        FIRAnalytics.logEvent(withName: "kFIREventEcommercePurchase", parameters: <#T##[String : NSObject]?#>)
+//        FIRAnalytics.logEvent(withName: "kFIREventGenerateLead", parameters: <#T##[String : NSObject]?#>)
+//        FIRAnalytics.logEvent(withName: "kFIREventJoinGroup", parameters: <#T##[String : NSObject]?#>)
+//        FIRAnalytics.logEvent(withName: "kFIREventLevelUp", parameters: <#T##[String : NSObject]?#>)
+//        FIRAnalytics.logEvent(withName: "kFIREventLogin", parameters: <#T##[String : NSObject]?#>)
+//        FIRAnalytics.logEvent(withName: "kFIREventPostScore", parameters: <#T##[String : NSObject]?#>)
+//        FIRAnalytics.logEvent(withName: "kFIREventPresentOffer", parameters: <#T##[String : NSObject]?#>)
+//        FIRAnalytics.logEvent(withName: "kFIREventPurchaseRefund", parameters: <#T##[String : NSObject]?#>)
+//        FIRAnalytics.logEvent(withName: "kFIREventSearch", parameters: <#T##[String : NSObject]?#>)
+//        FIRAnalytics.logEvent(withName: "kFIREventSelectContent", parameters: <#T##[String : NSObject]?#>)
+//        FIRAnalytics.logEvent(withName: "kFIREventShare", parameters: <#T##[String : NSObject]?#>)
+//        FIRAnalytics.logEvent(withName: "kFIREventSignUp", parameters: <#T##[String : NSObject]?#>)
+//        FIRAnalytics.logEvent(withName: "kFIREventSpendVirtualCurrency", parameters: <#T##[String : NSObject]?#>)
+//        FIRAnalytics.logEvent(withName: "kFIREventTutorialBegin", parameters: <#T##[String : NSObject]?#>)
+//        FIRAnalytics.logEvent(withName: "kFIREventTutorialComplete", parameters: <#T##[String : NSObject]?#>)
+//        FIRAnalytics.logEvent(withName: "kFIREventUnlockAchievement", parameters: <#T##[String : NSObject]?#>)
+//        FIRAnalytics.logEvent(withName: "kFIREventViewItem", parameters: <#T##[String : NSObject]?#>)
+//        FIRAnalytics.logEvent(withName: "kFIREventViewItemList", parameters: <#T##[String : NSObject]?#>)
+//        FIRAnalytics.logEvent(withName: "kFIREventViewSearchResults", parameters: <#T##[String : NSObject]?#>)
+        
+        FIRAnalytics .setUserID("ID1231231234")
+        
         
     }
     
